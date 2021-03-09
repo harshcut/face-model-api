@@ -1,5 +1,6 @@
 const cors = require("cors");
 const express = require("express");
+const knex = require("knex");
 
 const app = express();
 
@@ -10,6 +11,16 @@ app.use(
     origin: true,
   })
 );
+
+const database = knex({
+  client: "pg",
+  connection: {
+    host: "127.0.0.1",
+    user: "postgres",
+    password: "post",
+    database: "face-model-storage",
+  },
+});
 
 app.get("/", (_req, res) => {
   res.send("https://github.com/harshcut/face-model-api");
