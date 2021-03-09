@@ -1,6 +1,9 @@
 const cors = require("cors");
 const express = require("express");
 const knex = require("knex");
+const bcrypt = require("bcrypt");
+
+const register = require("./controllers/register");
 
 const app = express();
 
@@ -20,6 +23,10 @@ const database = knex({
     password: "post",
     database: "face-model-storage",
   },
+});
+
+app.post("/register", (req, res) => {
+  register(req, res, database, bcrypt);
 });
 
 app.get("/", (_req, res) => {
