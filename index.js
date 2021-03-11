@@ -4,6 +4,7 @@ const knex = require("knex");
 const bcrypt = require("bcrypt");
 
 const register = require("./controllers/register");
+const signin = require("./controllers/signin");
 
 const app = express();
 
@@ -27,6 +28,10 @@ const database = knex({
 
 app.post("/register", (req, res) => {
   register(req, res, database, bcrypt);
+});
+
+app.post("/signin", (req, res) => {
+  signin(req, res, database, bcrypt);
 });
 
 app.get("/", (_req, res) => {
