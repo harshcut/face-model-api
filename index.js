@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 
 const register = require("./controllers/register");
 const signin = require("./controllers/signin");
+const authenticate = require("./controllers/authenticate");
 
 const app = express();
 
@@ -32,6 +33,10 @@ app.post("/register", (req, res) => {
 
 app.post("/signin", (req, res) => {
   signin(req, res, database, bcrypt);
+});
+
+app.post("/authenticate", (req, res) => {
+  authenticate(req, res, database);
 });
 
 app.get("/", (_req, res) => {
