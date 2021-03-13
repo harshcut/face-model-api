@@ -2,6 +2,7 @@ const cors = require("cors");
 const express = require("express");
 const knex = require("knex");
 const bcrypt = require("bcrypt");
+require("dotenv").config();
 
 const register = require("./controllers/register");
 const signin = require("./controllers/signin");
@@ -14,18 +15,24 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: true,
+    origin: process.env.ORIGIN || true,
   })
 );
 
 const database = knex({
   client: "pg",
-  connection: {
-    host: "127.0.0.1",
-    user: "postgres",
-    password: "post",
-    database: "face-model-storage",
-  },
+  connection:
+    process.env.DEV === "true"
+      ? {
+          host: "127.0.0.1",
+          user: "postgres",
+          password: "post",
+          database: "face-model-storage",
+        }
+      : {
+          connectionString: process.env.DATABASE_URL,
+          ssl: { rejectUnauthorized: false },
+        },
 });
 
 app.post("/register", (req, res) => {

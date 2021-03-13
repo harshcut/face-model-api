@@ -1,5 +1,4 @@
 const Clarifai = require("clarifai");
-require("dotenv").config();
 
 const detect = (req, res, database) => {
   const { id, email, image } = req.body;
